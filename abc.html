@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Equal Circle Partitions</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .circle {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    .partition {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      clip-path: polygon(50% 50%, 100% 0, 100% 100%, 50% 50%);
+      /* transform-origin: 50% 50%; */
+    }
+  </style>
+</head>
+<body>
+
+  <div id="circle" class="circle"></div>
+
+  <script>
+    function createPartitions(numPartitions) {
+      const circle = document.getElementById('circle');
+      circle.innerHTML = '';  // Clear any existing partitions
+
+      const angleStep = 360 / numPartitions;  // Calculate angle for each partition
+
+      for (let i = 0; i < numPartitions; i++) {
+        // Create a new partition div
+        const partition = document.createElement('div');
+        partition.classList.add('partition');
+        partition.style.backgroundColor = getRandomColor();
+
+        // Rotate each partition by angleStep * i to evenly distribute them
+        partition.style.transform = `rotate(${i * angleStep}deg)`;
+        // Adjust rotation back to prevent the partition from being rotated inside its wedge
+
+        // Append the partition to the circle
+        circle.appendChild(partition);
+      }
+    }
+
+    // Function to generate a random color
+    function getRandomColor() {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+
+    // Create partitions dynamically by specifying the number of partitions
+    createPartitions(10);  // You can change this value to create a different number of partitions
+  </script>
+
+</body>
+</html>
